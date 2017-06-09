@@ -1,0 +1,84 @@
+$colors: (
+  'o': transparent,
+  'w': white,
+  'g': gray,
+  'y': yellow,
+  'b': black,
+  'a': #c4c40b
+);
+
+$size: 10px !default;
+
+$pixel-art: (
+  heart: (
+    (o o o o o o b b b b b b b b b b b o o o o o o o)
+    (o o o o o b b b b b b b b b b b b b o o o o o o)
+    (o o o o o b b b o o b b b o o b b b o o o o o o)
+    (o o o o b b b w w w o o o o o o b b b o o o o o)
+    (o o o o b b o o b b b o b b b o o b b o o o o o)
+    (o o o o b w w o b b w o w b b o o o b o o o o o)
+    (o w w w b w w o b b b o b b b o o o b b o o o o)
+    (o o w b b b o o o o w o o o w w o b b b o o o o)
+    (o w w b b b b b o b b b b b b o b b b b b o o o)
+    (o w w w o b b g g g b b b b g g g b b o o o o o)
+    (o w w w b b b g b a a y y y y b g b b b o o o o)
+    (o o o w b b b b o o a a a y o o b b b b b o o o)
+    (o o o b b b g g w w w a a w w w g g b b b o o o)
+    (o o o b b g g w w w w w w w w w w g g b b o o o)
+    (o o b b b g w w w w w w w w w w w o g b b b o o)
+    (o o b b b g w w w w w w w w w w w o g b b b o o)
+    (o b b b b g w w w w w w w w w w w o g b b b b o)
+    (b b o b b g w w w w w w w w w w w o g b b o b b)
+    (o o o b b g w w w w w w w w w w w o g b b o o o)
+    (o o o b b g w w w w w w w w w w w o g b b o o o)
+    (o o o b b g w w w w w w w w w w w o g b b o o o)
+    (o o o b b g w w w w w w w w w w w o g b b o o o)
+    (o o o b b g w w w w w w w w w w w o g b b o o o)
+    (o o o b b b g w w w w w w w w w w g b b b o o o)
+    (o o o b b b g w w w w w w w w w w g b b b o o o)
+    (o o o b b b g g w w w w w w w w g g b b b o o o)
+    (o o o b y y y y g w w w w w w g y y y y b o o o)
+    (o o o y y y y y y g g w w g g y y y y y y o o o)
+    (o o y y y y y y y y g w w g y y y y y y y y o o)
+    (o o y y y y y y y y b b b b y y y y y y y y o o)
+  )
+);
+
+@function pixelize($matrix, $size){
+  $sh: '';
+  $rows: length($matrix);
+
+  @for $row from 1 through $rows {
+    $row-num: nth($matrix, $row);
+
+    @for $col from 1 through length($row-num) {
+      $dot: nth($row-num, $col);
+
+      $sh: $sh + ($size*$col) + ' ' + ( $size*$row) + ' ' + map-get($colors, $dot);
+      @if not ($col == length($row-num) and $row == $rows){
+        $sh: $sh + ',';
+      }
+    }
+  }
+  @return unquote($sh);
+}
+
+@mixin style-item($matrix, $size){
+
+}
+
+.pixelized--character2{
+  outline: 1px;
+  position: relative;
+  height: $size*length(map-get($pixel-art,heart));
+  width: $size*length(nth(map-get($pixel-art, heart),1)); 
+  &::after {
+    top: -$size;
+    left: -$size;
+    height: $size;
+    width: $size;
+    content: '';
+    position: absolute;
+    box-shadow: pixelize(map-get($pixel-art, heart),$size);
+}
+}

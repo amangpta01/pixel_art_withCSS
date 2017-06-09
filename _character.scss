@@ -1,0 +1,137 @@
+$colors: (
+  'o': transparent,
+  'k': green,
+  'p': #c19222,
+  'w': white,
+  'g': gray,
+  'r': orange,
+  'c': #2c59a0,
+  'y': yellow,
+  'b': black,
+  'a': #c4c40b
+);
+
+$size: 10px !default;
+
+$pixel-art: (
+  kevin: (
+    (o o o o o o o o o o o o k k k k k o o o o o o o)
+    (o o o o o o o o k k k k g g g g g k k o o o o o)
+    (o o o o o o o k g g g g g g g g g g g k o o o o)
+    (o o o o o k k g g g g p p p p p g g g k o o o o)
+    (o k k o k w w k g p p p p p p p p g g g k o o o)
+    (k w w k k w w k g p p p p p p k k g g g g k k o)
+    (k w w w k w w k k k k p p p p p p g g g g g k o)
+    (o k w w k k k k k k w w p p w w k g g g g g k o)
+    (k w w w k w w w k w k w p p w k w g g g g g g k)
+    (k w w w k w w w k w k w p p w k w k g g g g k o)
+    (k w w w w k k w k p p p p p p p p p p g g k o o)
+    (o k k w w w w k p p p p p p p p p p p k p k o o)
+    (o o o k k k k k p p p p r r r r p p p k k o o o)
+    (o o o o k k k k k p p r r r r p p p k o o o o o)
+    (o o o o k k k k k k p p p p p p p k k k o o o o)
+    (o o o o o k k k k k k p p p p k k k k k k o o o)
+    (o o o o o k k k k k p p p p p p k k k k k k o o)
+    (o o o o o o k k k k k k k k k k k k k k k p k o)
+    (o o o o o o o k k k k k w w k k k k k p p p k o)
+    (o o o o o o o k k k k k w w k k k k k p p p k o)
+    (o o o o o o o k k k k k w w k k k k k p p k o o)
+    (o o o o o o o k k k k k k k k k k k k k k o o o)
+    (o o o o o o k k c c c c c c c c c c c k o o o o)
+    (o o o o o o k c c c c c c c c c c c c k o o o o)
+    (o o o o o k k c c c c c c c c c c c c k k o o o)
+    (o o o o o k c c c c c k k k k c c c c c k o o o)
+    (o o o k k k c c c c k k k k k k c c c c k k k o)
+    (o o k k k k k k k k k k o o k k k k k k k k k k)
+    (o o o k k k k k k k k k o o k k k k k k k k k k)
+    (o o o o k k k k k k k o o o o k k k k k k k o o)
+  ),
+
+  penguin: (
+    (o o o o o o o b b b b b b b b b b o o o o o o o)
+    (o o o o o o b b b b b b b b b b b b o o o o o o)
+    (o o o o o b b b w w b b b w w b b b o o o o o o)
+    (o o o o o b b w w w w w w w w w b b b o o o o o)
+    (o o o o o b w w b b b w b b b w w b b o o o o o)
+    (o o o o o b w w b b w w w b b w w w b o o o o o)
+    (o o o o b b w w b b b w b b b w w w b b o o o o)
+    (o o o o b b w w w w w w w w w w w b b b o o o o)
+    (o o o b b b b b w b b b b b b w b b b b b o o o)
+    (o o o o o b b g g g b b b b g g g b b o o o o o)
+    (o o o o b b b g b a a y y y y b g b b b o o o o)
+    (o o o o b b b b w w a a a y w w b b b b o o o o)
+    (o o o b b b g g w w w a a w w w g g b b b o o o)
+    (o o o b b g g w w w w w w w w w w g g b b o o o)
+    (o o b b b g w w w w w w w w w w w w g b b b o o)
+    (o o b b b g w w w w w w w w w w w w g b b b o o)
+    (o b b b b g w w w w w w w w w w w w g b b b b o)
+    (b b o b b g w w w w w w w w w w w w g b b o b b)
+    (o o o b b g w w w w w w w w w w w w g b b o o o)
+    (o o o b b g w w w w w w w w w w w w g b b o o o)
+    (o o o b b g w w w w w w w w w w w w g b b o o o)
+    (o o o b b g w w w w w w w w w w w w g b b o o o)
+    (o o o b b g g w w w w w w w w w w g g b b o o o)
+    (o o o b b b g w w w w w w w w w w g b b b o o o)
+    (o o o b b b g w w w w w w w w w w g b b b o o o)
+    (o o o b b b g g w w w w w w w w g g b b b o o o)
+    (o o o b y y y y g w w w w w w g y y y y b o o o)
+    (o o o y y y y y y g g w w g g y y y y y y o o o)
+    (o o y y y y y y y y g w w g y y y y y y y y o o)
+    (o o y y y y y y y y b b b b y y y y y y y y o o)
+  ) 
+);
+
+@function pixelize($matrix, $size){
+  $sh: '';
+  $rows: length($matrix);
+
+  @for $row from 1 through $rows {
+    $row-num: nth($matrix, $row);
+
+    @for $col from 1 through length($row-num) {
+      $dot: nth($row-num, $col);
+
+      $sh: $sh + ($size*$col) + ' ' + ( $size*$row) + ' ' + map-get($colors, $dot);
+      @if not ($col == length($row-num) and $row == $rows){
+        $sh: $sh + ',';
+      }
+    }
+  }
+  @return unquote($sh);
+}
+
+@mixin style-item($matrix, $size){
+
+}
+
+.pixelized--character{
+  outline: 1px;
+  position: relative;
+  height: $size*length(map-get($pixel-art,kevin));
+  width: $size*length(nth(map-get($pixel-art, kevin),1)); 
+  &::after {
+    top: -$size;
+    left: -$size;
+    height: $size;
+    width: $size;
+    content: '';
+    position: absolute;
+    box-shadow: pixelize(map-get($pixel-art, kevin),$size);
+}
+}
+
+.pixelized--character2{
+  outline: 1px;
+  position: relative;
+  height: $size*length(map-get($pixel-art,penguin));
+  width: $size*length(nth(map-get($pixel-art, penguin),1)); 
+  &::after {
+    top: -$size;
+    left: -$size;
+    height: $size;
+    width: $size;
+    content: '';
+    position: absolute;
+    box-shadow: pixelize(map-get($pixel-art, penguin),$size);
+}
+}
